@@ -1,21 +1,30 @@
 import axios from 'axios'
-import { createApp } from 'vue'
-import VueFlashMessage from 'vue-flash-message'
 import { useToast } from "vue-toastification"
 
+// Khởi tạo toast instance
 const toast = useToast()
-const showFlashMessage = (message, type = 'info') => {
-    toast[type](message)
-}
 
-const app = createApp({})
+// Base URLs cho API
 const baseURL = 'http://localhost:3000/words/'
 const baseURL1 = 'http://localhost:3000/'
 
+// Hàm xử lý lỗi chung
 const handleError = fn => (...params) =>
     fn(...params).catch(error => {
-        vm.flash(`${error.response.status}: ${error.response.statusText}`, 'error')
-    });
+        console.error('API Error:', error)
+
+        // Hiển thị thông báo lỗi 
+        if (error.response) {
+            toast.error(`${error.response.status}: ${error.response.statusText}`)
+        } else if (error.request) {
+            toast.error('Network error: Unable to connect to server')
+        } else {
+            toast.error('An unexpected error occurred')
+        }
+
+        // Re-throw error để component có thể xử lý thêm nếu cần
+        throw error
+    })
 
 export const api = {
     getWord: handleError(async id => {
@@ -46,4 +55,24 @@ export const api = {
         const res = await axios.post(`${baseURL1}login`, {email, password});
         return res.data;
     })
-};
+}
+
+// Utility function để hiển thị thông báo thành công
+export const showSuccessMessage = (message) => {
+    toast.success(message)
+}
+
+// Utility function để hiển thị thông báo thông tin
+export const showInfoMessage = (message) => {
+    toast.info(message)
+}
+
+// Utility function để hiển thị thông báo cảnh báo
+export const showWarningMessage = (message) => {
+    toast.warning(message)
+}
+
+// Utility function để hiển thị thông báo báo lỗi
+export const showErrorMessage = (message) => {
+    toast.error(message)
+}

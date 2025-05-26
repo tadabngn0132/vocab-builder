@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { api } from '../helpers/helpers'
+import { api, showSuccessMessage, showErrorMessage } from '../helpers/helpers'
 
 const words = ref([])
 
@@ -8,13 +8,12 @@ const onDestroy = async (id) => {
   const sure = window.confirm('Are you sure?')
   if (!sure) return
   await api.deleteWord(id)
-  this.flash('Word deleted successfully!', 'success')
-  const newWords = words.filter(word => word._id !== id)
-  words = newWords
+  showSuccessMessage('Word deleted successfully!')
+  words.value = words.filter(word => word._id !== id)
 }
 
 onMounted(async () => {
-  words = await api.getWords()
+  words.value = await api.getWords()
 })
 </script>
 
