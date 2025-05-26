@@ -1,85 +1,63 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div id="app">
+    <div class="ui inverted segment navbar">
+      <div class="ui center aligned container">
+        <div class="ui large secondary inverted pointing menu compact">
+          <RouterLink to="/words" exact class="item">
+            <i class="comment outline icon"></i> Words
+          </RouterLink>
+          <RouterLink to="/words/new" exact class="item">
+            <i class="plus circle icon"></i> New
+          </RouterLink>
+          <RouterLink to="/test" exact class="item">
+            <i class="graduation cap icon"></i> Test
+          </RouterLink>
+          <RouterLink to="/tadabngn0132" exact class="item">
+            <i class=" circle user icon"></i> tadabngn0132
+          </RouterLink>
+          <RouterLink to="/register" exact class="item">Register</RouterLink>
+          <RouterLink to="/login" exact class="item">Login</RouterLink>
+        </div>
+      </div>
     </div>
-  </header>
 
-  <RouterView />
+    <div class="ui text container">
+      <flash-message class="myFlash"></flash-message>
+      <div class="ui one column grid">
+        <div class="column">
+          <RouterView />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+#app > div.navbar {
+  margin-bottom: 1.5em;
 }
-
-.logo {
+.myFlash {
+  width: 250px;
+  margin: 10px;
+  position: absolute;
+  top: 50;
+  right: 0;
+}
+input {
+  width: 300px;
+}
+div.label {
+  width: 120px;
+}
+div.input {
+  margin-bottom: 10px;
+}
+button.ui.button {
+  margin-top: 15px;
   display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
 </style>
